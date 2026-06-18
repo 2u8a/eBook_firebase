@@ -1,0 +1,10 @@
+# Firebase
+.firebase/
+
+# Ad tag file — contains publisher-specific ad network credentials.
+# Create your own ad.html locally and do NOT commit it.
+ad.html
+
+# Actual book content — keep proprietary texts out of the public repo.
+# Add your own books under data/books/ following the sample-book structure.
+data/books/crime-and-punishment/

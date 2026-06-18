@@ -1,0 +1,586 @@
+/* ===== Design Tokens ===== */
+:root {
+  --font-size-base: 18px;
+  --line-height: 1.9;
+  --color-bg: #faf9f6;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b6b6b;
+  --color-text-faint: #a0a0a0;
+  --color-border: #e0ddd8;
+  --color-accent: #2c5282;
+  --color-accent-light: #ebf1fa;
+  --color-locked: #f5f5f5;
+  --color-header-bg: #ffffff;
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-header: 0 1px 4px rgba(0,0,0,0.06);
+  --radius: 12px;
+  --max-width: 680px;
+  --header-height: 52px;
+}
+
+[data-theme="dark"] {
+  --color-bg: #161616;
+  --color-surface: #1e1e1e;
+  --color-text: #e8e6e3;
+  --color-text-muted: #9a9a9a;
+  --color-text-faint: #5a5a5a;
+  --color-border: #333333;
+  --color-accent: #7cb4f4;
+  --color-accent-light: #1a2535;
+  --color-locked: #1a1a1a;
+  --color-header-bg: #1e1e1e;
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.3);
+  --shadow-header: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: var(--font-size-base); -webkit-text-size-adjust: 100%; }
+body {
+  font-family: 'Noto Serif JP', 'Yu Mincho', 'YuMincho', '游明朝', 'Hiragino Mincho ProN', Georgia, serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: var(--line-height);
+  min-height: 100dvh;
+  transition: background 0.2s, color 0.2s;
+}
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ===== Layout ===== */
+.view { display: none; min-height: 100dvh; flex-direction: column; }
+.view.active { display: flex; }
+
+/* ===== Header ===== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: var(--color-header-bg);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-header);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+.header-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: var(--color-accent);
+  font-size: 20px;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.header-back:hover { background: var(--color-accent-light); }
+.header-title {
+  flex: 1;
+  font-size: 0.95rem;
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+/* ===== Theme Toggle ===== */
+.btn-theme {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--color-text-muted);
+  transition: background 0.15s;
+}
+.btn-theme:hover { background: var(--color-accent-light); }
+
+/* ===== Home View ===== */
+#view-home .app-header { justify-content: space-between; }
+#view-home .app-header h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+}
+.home-main {
+  flex: 1;
+  padding: 24px 16px 40px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+.home-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-text-faint);
+  text-transform: uppercase;
+  font-family: -apple-system, sans-serif;
+  margin-bottom: 12px;
+}
+
+/* ===== Book Card ===== */
+.book-card {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  border: 1px solid var(--color-border);
+}
+.book-card:active { transform: scale(0.98); }
+.book-cover {
+  height: 120px;
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.book-cover-title {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.3;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 1;
+}
+.book-cover-author {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.7rem;
+  font-family: -apple-system, sans-serif;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.05em;
+}
+.book-cover::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0.2) 100%);
+}
+.book-info {
+  padding: 14px 16px;
+}
+.book-description {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.book-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+}
+.book-trial-badge {
+  font-size: 0.7rem;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-accent);
+  background: var(--color-accent-light);
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60%;
+}
+.book-read-btn {
+  font-size: 0.8rem;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===== Resume Banner ===== */
+.resume-banner {
+  background: var(--color-accent-light);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: opacity 0.15s;
+}
+.resume-banner:active { opacity: 0.8; }
+.resume-icon { font-size: 24px; flex-shrink: 0; }
+.resume-text { flex: 1; }
+.resume-label {
+  font-size: 0.7rem;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-accent);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+.resume-title {
+  font-size: 0.9rem;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-text);
+  font-weight: 600;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.resume-arrow { color: var(--color-accent); font-size: 18px; }
+
+/* ===== TOC View ===== */
+.toc-main {
+  flex: 1;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 0 48px;
+}
+.toc-book-header {
+  padding: 24px 16px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+.toc-book-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.toc-book-author {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  font-family: -apple-system, sans-serif;
+}
+.toc-part {
+  padding: 0 0 4px;
+}
+.toc-part-header {
+  padding: 20px 16px 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.toc-part-number {
+  font-size: 0.65rem;
+  font-family: -apple-system, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-text-faint);
+  text-transform: uppercase;
+  padding-top: 3px;
+  white-space: nowrap;
+}
+.toc-part-info { flex: 1; }
+.toc-part-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 3px;
+  font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+}
+.toc-part-desc {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+  font-family: -apple-system, sans-serif;
+}
+.toc-chapters { padding: 4px 0 8px; }
+.toc-chapter-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 11px 16px;
+  gap: 12px;
+  cursor: pointer;
+  transition: background 0.12s;
+  border-left: 3px solid transparent;
+}
+.toc-chapter-item:hover { background: var(--color-accent-light); border-left-color: var(--color-accent); }
+.toc-chapter-item.locked {
+  cursor: default;
+  opacity: 0.45;
+}
+.toc-chapter-item.locked:hover { background: none; border-left-color: transparent; }
+.toc-ch-num {
+  font-size: 0.7rem;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-text-faint);
+  padding-top: 2px;
+  width: 44px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.toc-ch-text { flex: 1; }
+.toc-ch-title {
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+.toc-ch-subtitle {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  font-family: -apple-system, sans-serif;
+  line-height: 1.5;
+}
+.toc-ch-arrow {
+  color: var(--color-text-faint);
+  font-size: 14px;
+  padding-top: 3px;
+  flex-shrink: 0;
+}
+.toc-locked-part {
+  background: var(--color-locked);
+  border-radius: 8px;
+  margin: 4px 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toc-lock-icon { font-size: 14px; color: var(--color-text-faint); }
+.toc-lock-text {
+  font-size: 0.8rem;
+  color: var(--color-text-faint);
+  font-family: -apple-system, sans-serif;
+}
+.toc-divider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 0 16px;
+}
+
+/* ===== Reader View ===== */
+#view-reader { background: var(--color-bg); }
+.reader-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: var(--color-header-bg);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-header);
+  display: flex;
+  align-items: center;
+  padding: 0 12px 0 4px;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+.reader-header.hidden-ui { opacity: 0; pointer-events: none; }
+.reader-chapter-info {
+  flex: 1;
+  overflow: hidden;
+}
+.reader-part-label {
+  font-size: 0.65rem;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-text-faint);
+  letter-spacing: 0.06em;
+}
+.reader-chapter-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-text);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.font-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.btn-font {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-family: -apple-system, sans-serif;
+  font-weight: 700;
+  transition: background 0.12s;
+}
+.btn-font:hover { background: var(--color-accent-light); color: var(--color-accent); }
+.btn-font-sm { font-size: 0.75rem; }
+.btn-font-lg { font-size: 1rem; }
+
+/* ===== Chapter Content ===== */
+.reader-main {
+  flex: 1;
+  padding: 32px 20px 80px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+.chapter-heading {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
+}
+.chapter-num {
+  font-size: 0.75rem;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-text-faint);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+}
+.chapter-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.chapter-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  font-family: -apple-system, 'Hiragino Kaku Gothic ProN', sans-serif;
+}
+.chapter-body p {
+  margin-bottom: 1.4em;
+  text-indent: 1em;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+.chapter-body p:last-child { margin-bottom: 0; }
+
+/* ===== Trial End Note ===== */
+.trial-end {
+  margin-top: 40px;
+  padding: 24px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+.trial-end-icon { font-size: 32px; margin-bottom: 12px; }
+.trial-end-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-family: -apple-system, sans-serif;
+}
+.trial-end-body {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  font-family: -apple-system, sans-serif;
+}
+
+/* ===== Reader Bottom Nav ===== */
+.reader-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--color-header-bg);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  gap: 12px;
+  transition: opacity 0.2s;
+  z-index: 100;
+}
+.reader-nav.hidden-ui { opacity: 0; pointer-events: none; }
+.btn-chapter-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-family: -apple-system, sans-serif;
+  font-weight: 600;
+  color: var(--color-accent);
+  transition: background 0.12s;
+}
+.btn-chapter-nav:hover { background: var(--color-accent-light); }
+.btn-chapter-nav:disabled { color: var(--color-text-faint); cursor: default; }
+.btn-chapter-nav:disabled:hover { background: none; }
+.reader-progress {
+  flex: 1;
+  text-align: center;
+  font-size: 0.75rem;
+  font-family: -apple-system, sans-serif;
+  color: var(--color-text-faint);
+}
+
+/* ===== Progress Bar ===== */
+.reading-progress-bar {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  height: 2px;
+  background: var(--color-accent);
+  transition: width 0.1s linear;
+  z-index: 101;
+  border-radius: 0 2px 2px 0;
+}
+
+/* ===== Loading ===== */
+.loading-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--color-text-faint);
+  font-family: -apple-system, sans-serif;
+  font-size: 0.9rem;
+  gap: 10px;
+}
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== Responsive ===== */
+@media (min-width: 640px) {
+  .home-main,
+  .toc-main,
+  .reader-main { padding-left: 24px; padding-right: 24px; }
+  .reader-main { padding-top: 40px; }
+}
+@media (min-width: 768px) {
+  :root { --font-size-base: 17px; }
+  .reader-nav { justify-content: center; gap: 40px; }
+}

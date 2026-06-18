@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="名作文学の試し読みができる電子書籍リーダー">
+  <title>文学試し読み</title>
+  <!-- heat mapping -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "x8p2d0kqjj");
+  </script>
+  <!-- Google tag (gtag.js) — GA4
+       TODO: Replace G-XXXXXXXXXX with your Measurement ID from Firebase/GA4 console -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JNJTNNSVPP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JNJTNNSVPP');
+  </script>
+
+  <!-- Google Fonts: Japanese serif for reading comfort -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Catalog is always loaded upfront (small file) -->
+  <script src="data/catalog.js"></script>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ===== HOME VIEW ===== -->
+  <div id="view-home" class="view">
+    <header class="app-header">
+      <h1>文学試し読み</h1>
+      <div class="header-actions">
+        <button class="btn-theme" aria-label="テーマ切り替え">🌙</button>
+      </div>
+    </header>
+
+    <main class="home-main">
+      <div id="book-list"></div>
+    </main>
+  </div>
+
+
+  <!-- ===== TOC VIEW ===== -->
+  <div id="view-toc" class="view">
+    <header class="app-header">
+      <button id="toc-back" class="header-back" aria-label="戻る">‹</button>
+      <div class="header-title" id="toc-header-title">目次</div>
+      <div class="header-actions">
+        <button class="btn-theme" aria-label="テーマ切り替え">🌙</button>
+      </div>
+    </header>
+
+    <main class="toc-main" id="toc-content">
+      <!-- dynamically rendered -->
+      <div style="padding:16px">
+        <div class="toc-book-title" id="toc-book-title"></div>
+        <div class="toc-book-author" id="toc-book-author"></div>
+      </div>
+    </main>
+  </div>
+
+
+  <!-- ===== READER VIEW ===== -->
+  <div id="view-reader" class="view">
+    <div class="reading-progress-bar" id="reading-progress-bar" style="width:0%"></div>
+
+    <header class="reader-header">
+      <button id="reader-back" class="header-back" aria-label="目次へ戻る">‹</button>
+      <div class="reader-chapter-info">
+        <div class="reader-part-label" id="reader-part-label"></div>
+        <div class="reader-chapter-label" id="reader-chapter-label"></div>
+      </div>
+      <div class="font-controls">
+        <button id="btn-font-decrease" class="btn-font btn-font-sm" aria-label="文字を小さく">A-</button>
+        <button id="btn-font-increase" class="btn-font btn-font-lg" aria-label="文字を大きく">A+</button>
+      </div>
+      <div class="header-actions">
+        <button class="btn-theme" aria-label="テーマ切り替え">🌙</button>
+      </div>
+    </header>
+
+    <main class="reader-main">
+      <div class="chapter-heading" id="chapter-heading">
+        <div class="chapter-num" id="chapter-num"></div>
+        <div class="chapter-title" id="chapter-title"></div>
+        <div class="chapter-subtitle" id="chapter-subtitle"></div>
+      </div>
+      <div class="chapter-body" id="chapter-body"></div>
+
+      <div class="ad-container" style="text-align: center; margin: 30px 0;">
+        <span style="font-size: 10px; color: #999;">スポンサーリンク</span><br>
+        <iframe id="ninja-ad-frame" src="ad.html" width="300" height="250" frameborder="0" scrolling="no"></iframe>
+      </div>
+    </main>
+
+    <nav class="reader-nav">
+      <button id="btn-prev-chapter" class="btn-chapter-nav" disabled>‹ 前の章</button>
+      <span class="reader-progress" id="reader-progress-label"></span>
+      <button id="btn-next-chapter" class="btn-chapter-nav">次の章 ›</button>
+    </nav>
+  </div>
+
+</div><!-- #app -->
+
+<script src="app.js"></script>
+</body>
+</html>
